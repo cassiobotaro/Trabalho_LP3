@@ -207,24 +207,25 @@ for g in generalizations:
 # print first
 # print last
 
-
+primitiveType = ['int','float','double','integer','string','char','boolean','long','date']
 # os.chdir("dao")
 for clazz in dicionario_classes.values():
+   if clazz.name.lower() not in primitiveType:
+    
+        f = open("%sDTO.java" % clazz.name, "w")
+        t = Template(file='../../templateDTO.impl', searchList=locals())
+        f.write(str(t))
+        f.close()
 
-    f = open("%sDTO.java" % clazz.name, "w")
-    t = Template(file='../../templateDTO.impl', searchList=locals())
-    f.write(str(t))
-    f.close()
+        os.chdir('../dao')
+        f = open("%sDAO.java" % clazz.name, "w")
+        t = Template(file='../../templateDAO.impl', searchList=locals())
+        f.write(str(t))
+        f.close()
 
-    os.chdir('../dao')
-    f = open("%sDAO.java" % clazz.name, "w")
-    t = Template(file='../../templateDAO.impl', searchList=locals())
-    f.write(str(t))
-    f.close()
-
-    os.chdir('../bo')
-    f = open("%sBO.java" % clazz.name, "w")
-    t = Template(file='../../templateBO.impl', searchList=locals())
-    f.write(str(t))
-    f.close()
-    os.chdir('../dto')
+        os.chdir('../bo')
+        f = open("%sBO.java" % clazz.name, "w")
+        t = Template(file='../../templateBO.impl', searchList=locals())
+        f.write(str(t))
+        f.close()
+        os.chdir('../dto')

@@ -1,7 +1,8 @@
 package #echo ''.join([$pacote,'.dao'])#;
 
 import java.sql.SQLException;
-import org.hibernate.Session;
+import java.util.*;
+import org.hibernate.*;
 import util.HibernateUtil;
 
 import #echo ''.join([$pacote,'.dto','.',$clazz.name,'DTO'])#;
@@ -27,5 +28,18 @@ public class #echo ''.join([$clazz.name,'DAO'])# {
     public void delete(#echo ''.join([$clazz.name,'DTO'])# $clazz.name.lower()) throws SQLException {
         session.delete($clazz.name.lower());
     }
+    
+    public #echo ''.join([$clazz.name,'DTO'])# load(#echo ''.join([$clazz.name,'DTO'])# $clazz.name.lower()) throws SQLException {
+        return (#echo ''.join([$clazz.name,'DTO'])#) session.load(#echo ''.join([$clazz.name,'DTO'])#.class, $clazz.name.lower());
+    }
+    
+    public Session getSession() {
+        return this.session;
+    }
+
+    public List<#echo ''.join([$clazz.name,'DTO'])#> criterias(Criteria criteria) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 
 }

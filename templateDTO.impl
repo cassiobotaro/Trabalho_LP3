@@ -1,16 +1,21 @@
 package #echo ''.join([$pacote,'.dto'])#;
 
+import java.io.*;
 import java.util.*;
+import javax.persistence.*;
 
+@Entity
+@Table(name="$clazz.name.lower()")
 public  #if $clazz.isAbstract.title() == 'True' then 'abstract' else ''
     class #echo ''.join([$clazz.name,'DTO'])#
     #if $clazz.parent #
         #echo ''.join(['extends ',$clazz.parent,'DTO']) #
     #end if
+    implements Serializable
     {
-
+    
     #set $primitiveType = ['int','float','double','integer','string','char','boolean','long','date']#
-
+    
     #for attr in $clazz.attrs
         #set $split = $attr.type.split(',')#
         #set $value = $split[0]#
@@ -19,12 +24,21 @@ public  #if $clazz.isAbstract.title() == 'True' then 'abstract' else ''
             #if $type.lower() in $primitiveType #
                 private List<$type> $attr.name = new ArrayList<$type>();
             #else#
+                @OneToMany(mappedBy = "$clazz.name.lower()", targetEntity = #echo ''.join([$type,'DTO'])#.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
                 private List<#echo ''.join([$type,'DTO'])#> $attr.name = new ArrayList<#echo ''.join([$type,'DTO'])#>();
             #end if
         #else#
             #if $attr.type.lower() in $primitiveType #
+                #if $attr.name == 'id'#
+                    @Id
+                    @GeneratedValue(strategy= GenerationType.AUTO)  
+                #else if $attr.type.lower() == 'date'#
+                    @Temporal(TemporalType.DATE)
+                #end if
+                @Column(name="$attr.name")
                 private $attr.type $attr.name;
             #else#
+                @ManyToOne(cascade= CascadeType.ALL)
                 private #echo ''.join([$attr.type,'DTO'])# $attr.name;
             #end if
         #end if
@@ -34,7 +48,7 @@ public  #if $clazz.isAbstract.title() == 'True' then 'abstract' else ''
         #set $split = $attr.type.split(',')#
         #set $value = $split[0]#
         #if $value == 'list'#
-            #set $type = $split[1]#
+            #set $type = $split[1]#            
             #if $type.lower() in $primitiveType #
                 public List<$type> get$attr.name.title()(){
                     return this.$attr.name;
@@ -60,7 +74,7 @@ public  #if $clazz.isAbstract.title() == 'True' then 'abstract' else ''
 
                 public void set$attr.name.title()($attr.type $attr.name){
                     this.$attr.name = $attr.name;
-                }
+                }            
             #else#
                 public #echo ''.join([$attr.type,'DTO'])# get$attr.name.title()(){
                     return this.$attr.name;
