@@ -1,0 +1,31 @@
+package #echo ''.join([$pacote,'.dao'])#;
+
+import java.sql.SQLException;
+import org.hibernate.Session;
+import util.HibernateUtil;
+
+import #echo ''.join([$pacote,'.dto','.',$clazz.name,'DTO'])#;
+
+public class #echo ''.join([$clazz.name,'DAO'])# {
+    
+    private Session session;
+
+    public #echo ''.join([$clazz.name,'DAO'])#() {
+        session = HibernateUtil.getSession();
+    }
+    
+    public Long save(#echo ''.join([$clazz.name,'DTO'])# $clazz.name.lower()) throws SQLException {
+        return (Long) session.save($clazz.name.lower());
+    }
+    
+    
+    public void update(#echo ''.join([$clazz.name,'DTO'])# $clazz.name.lower()) throws SQLException {
+        session.update($clazz.name.lower());
+    }
+    
+    
+    public void delete(#echo ''.join([$clazz.name,'DTO'])# $clazz.name.lower()) throws SQLException {
+        session.delete($clazz.name.lower());
+    }
+
+}

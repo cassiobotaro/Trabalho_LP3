@@ -1,0 +1,28 @@
+package #echo ''.join([$pacote,'.bo'])#;
+
+import #echo ''.join([$pacote,'.dto','.',$clazz.name,'DTO'])#;
+import #echo ''.join([$pacote,'.dao','.',$clazz.name,'DAO'])#;
+
+import java.sql.SQLException;
+
+public class #echo ''.join([$clazz.name,'BO'])# {
+    
+    private #echo ''.join([$clazz.name,'DAO'])# dao;
+
+    public #echo ''.join([$clazz.name,'BO'])#() {
+        this.dao = new #echo ''.join([$clazz.name,'DAO'])#();
+    }
+    
+    public Long save(#echo ''.join([$clazz.name,'DTO'])# $clazz.name.lower()) throws SQLException {
+        return this.dao.save($clazz.name.lower());
+    }
+    
+    public void update(#echo ''.join([$clazz.name,'DTO'])# $clazz.name.lower()) throws SQLException {
+        this.dao.update($clazz.name.lower());
+    }
+    
+    public void delete(#echo ''.join([$clazz.name,'DTO'])# $clazz.name.lower()) throws SQLException {
+        this.dao.delete($clazz.name.lower());
+    }
+
+}

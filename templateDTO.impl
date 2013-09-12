@@ -1,0 +1,77 @@
+package #echo ''.join([$pacote,'.dto'])#;
+
+import java.util.*;
+
+public  #if $clazz.isAbstract.title() == 'True' then 'abstract' else ''
+    class #echo ''.join([$clazz.name,'DTO'])#
+    #if $clazz.parent #
+        #echo ''.join(['extends ',$clazz.parent,'DTO']) #
+    #end if
+    {
+
+    #set $primitiveType = ['int','float','double','integer','string','char','boolean','long','date']#
+
+    #for attr in $clazz.attrs
+        #set $split = $attr.type.split(',')#
+        #set $value = $split[0]#
+        #if $value == 'list'#
+            #set $type = $split[1]#
+            #if $type.lower() in $primitiveType #
+                private List<$type> $attr.name = new ArrayList<$type>();
+            #else#
+                private List<#echo ''.join([$type,'DTO'])#> $attr.name = new ArrayList<#echo ''.join([$type,'DTO'])#>();
+            #end if
+        #else#
+            #if $attr.type.lower() in $primitiveType #
+                private $attr.type $attr.name;
+            #else#
+                private #echo ''.join([$attr.type,'DTO'])# $attr.name;
+            #end if
+        #end if
+    #end for
+
+    #for attr in $clazz.attrs
+        #set $split = $attr.type.split(',')#
+        #set $value = $split[0]#
+        #if $value == 'list'#
+            #set $type = $split[1]#
+            #if $type.lower() in $primitiveType #
+                public List<$type> get$attr.name.title()(){
+                    return this.$attr.name;
+                }
+
+                public void set$attr.name.title()(List<$type> $attr.name){
+                    this.$attr.name = $attr.name;
+                }
+            #else#
+                public List<#echo ''.join([$type,'DTO'])#> get$attr.name.title()(){
+                    return this.$attr.name;
+                }
+
+                public void set$attr.name.title()(List<#echo ''.join([$type,'DTO'])#> $attr.name){
+                    this.$attr.name = $attr.name;
+                }
+            #end if
+        #else#
+            #if $attr.type.lower() in $primitiveType #
+                public $attr.type get$attr.name.title()(){
+                    return this.$attr.name;
+                }
+
+                public void set$attr.name.title()($attr.type $attr.name){
+                    this.$attr.name = $attr.name;
+                }
+            #else#
+                public #echo ''.join([$attr.type,'DTO'])# get$attr.name.title()(){
+                    return this.$attr.name;
+                }
+
+                public void set$attr.name.title()(#echo ''.join([$attr.type,'DTO'])# $attr.name){
+                    this.$attr.name = $attr.name;
+                }
+            #end if#
+        #end if
+
+    #end for
+
+}
