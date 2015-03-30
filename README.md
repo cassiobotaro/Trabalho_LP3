@@ -14,7 +14,7 @@ André Vital Saúde
 
 ##Dependências:
 
-* Python 2.7 (`sudo apt-get install python3`) 
+* Python 2.7 (`sudo apt-get install python`) 
 * Cheetah 2.4.4(`pip install cheetah`)
 
 
