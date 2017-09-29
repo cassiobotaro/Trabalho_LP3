@@ -1,24 +1,24 @@
-##xmi2java
-##Trabalho de Linguagens de Programação III
+## xmi2java
+## Trabalho de Linguagens de Programação III
 
 Implementar um programa em Python que gere código Java através de um arquivo .xmi exportado pelo software ArgoUML. São gerados os arquivos de DTO (Data Transfer Object), DAO (Data Access Object) e BO (Business Object).
 
-##Grupo:
+## Grupo:
 
 * André H. Costa Silva
 * Cássio O. Botaro
 * Matheus H. Nogueira de Paula
 
-##Professor: 
+## Professor: 
 André Vital Saúde
 
-##Dependências:
+## Dependências:
 
 * Python 2.7 (`sudo apt-get install python`) 
 * Cheetah 2.4.4(`pip install cheetah`)
 
 
-##Como utilizar:
+## Como utilizar:
 
 1. Clone o repositório 
 
